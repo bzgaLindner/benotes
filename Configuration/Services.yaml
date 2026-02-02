@@ -8,4 +8,16 @@ services:
     resource: '../Classes/*'
     exclude: '../Classes/Domain/Model/*'
 
-    
+  # Register widgets so DI works (public so ext_localconf can reference the service)
+  Dl\Benotes\Widget\PublicNotesWidget:
+    public: true
+    arguments:
+      $noteRepository: '@Dl\Benotes\Domain\Repository\NoteRepository'
+      $moduleTemplateFactory: '@TYPO3\CMS\Backend\Template\ModuleTemplateFactory'
+      $uriBuilderBackend: '@TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder'
+  Dl\Benotes\Widget\PrivateNotesWidget:
+    public: true
+    arguments:
+      $noteRepository: '@Dl\Benotes\Domain\Repository\NoteRepository'
+      $moduleTemplateFactory: '@TYPO3\CMS\Backend\Template\ModuleTemplateFactory'
+      $uriBuilderBackend: '@TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder'  

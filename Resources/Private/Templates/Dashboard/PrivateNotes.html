@@ -1,0 +1,20 @@
+{namespace core = TYPO3\CMS\Core\ViewHelpers}
+<f:layout name="Default" />
+
+<f:section name="Content">
+    <h3><f:translate key="widget.private.title" extensionName="Benotes" /></h3>
+    <ul class="list-unstyled">
+        <f:for each="{notes}" as="note">
+            <li>
+                <f:format.date format="d-m-Y H:i">{note.crdate}</f:format.date>
+                &nbsp;—&nbsp;
+                <strong>
+                    <f:link.action action="show" controller="Note" arguments="{note: note}">
+                        {note.title}
+                    </f:link.action>
+                </strong>
+                &nbsp; (<span>{note.cruser.username}</span>)
+            </li>
+        </f:for>
+    </ul>
+</f:section>

@@ -28,4 +28,20 @@ call_user_func(function()
 $GLOBALS['TYPO3_CONF_VARS']['MAIL']['templateRootPaths']['700'] = 'EXT:benotes/Resources/Private/Templates/Email/';
 $GLOBALS['TYPO3_CONF_VARS']['BE']['stylesheets']['benotes'] = 'EXT:benotes/Resources/Public/css/tx_benotes.css';
 
+// --- add Widgets ---
+if (!isset($GLOBALS['TYPO3_CONF_VARS']['BE']['widgets'])) {
+    $GLOBALS['TYPO3_CONF_VARS']['BE']['widgets'] = [];
+}
+
+$GLOBALS['TYPO3_CONF_VARS']['BE']['widgets']['benotes_latest_public'] = [
+    'provider' => \Dl\Benotes\Widget\PublicNotesWidget::class,
+    'title' => 'LLL:EXT:benotes/Resources/Private/Language/locallang.xlf:widget.public.title',
+    'description' => 'LLL:EXT:benotes/Resources/Private/Language/locallang.xlf:widget.public.description'
+];
+
+$GLOBALS['TYPO3_CONF_VARS']['BE']['widgets']['benotes_latest_private'] = [
+    'provider' => \Dl\Benotes\Widget\PrivateNotesWidget::class,
+    'title' => 'LLL:EXT:benotes/Resources/Private/Language/locallang.xlf:widget.private.title',
+    'description' => 'LLL:EXT:benotes/Resources/Private/Language/locallang.xlf:widget.private.description'
+];
 ?>

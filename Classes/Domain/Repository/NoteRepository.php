@@ -87,5 +87,49 @@ class NoteRepository extends Repository  {
 		);
 		return $query->execute();
 	}
+
+	/**
+	 * Find latest public notes with limit
+	 *
+	 * @param int $limit
+	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+	 */
+	public function findLatestPublic(int $limit = 10): QueryResultInterface
+	{
+		$query = $this->createQuery();
+		$query->setOrderings([
+			'crdate' => QueryInterface::ORDER_DESCENDING,
+			'sorting' => QueryInterface::ORDER_ASCENDING,
+		]);
+		$query->matching(
+			$query->equals('public', 1)
+		);
+		$query->setLimit($limit);
+		return $query->execute();
+	}
+
+	/**
+	 * Find latest private notes for a given backend user with limit
+	 *
+	 * @param int $userUid
+	 * @param int $limit
+	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+	 */
+	public function findLatestPrivateByUser(int $userUid, int $limit = 10): QueryResultInterface
+	{
+		$query = $this->createQuery();
+		$query->setOrderings([
+			'crdate' => QueryInterface::ORDER_DESCENDING,
+			'sorting' => QueryInterface::ORDER_ASCENDING,
+		]);
+		$query->matching(
+			$query->logicalAnd(
+				$query->equals('public', 0),
+				$query->equals('cruser', (int)$userUid)
+			)
+		);
+		$query->setLimit($limit);
+		return $query->execute();
+	}
 	
 }
